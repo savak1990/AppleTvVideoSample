@@ -9,11 +9,14 @@
 /* Begin PBXBuildFile section */
 		D64FCA7A22B93AF800B6FFC2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D64FCA7922B93AF800B6FFC2 /* AppDelegate.m */; };
 		D64FCA7D22B93AF800B6FFC2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D64FCA7C22B93AF800B6FFC2 /* ViewController.m */; };
-		D64FCA8022B93AF800B6FFC2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D64FCA7E22B93AF800B6FFC2 /* Main.storyboard */; };
+		D64FCA8022B93AF800B6FFC2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D64FCA7E22B93AF800B6FFC2 /* Main.storyboard */; settings = {ASSET_TAGS = (wowza_asset_no_frames, ); }; };
 		D64FCA8222B93AFB00B6FFC2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D64FCA8122B93AFB00B6FFC2 /* Assets.xcassets */; };
 		D64FCA8522B93AFB00B6FFC2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D64FCA8422B93AFB00B6FFC2 /* main.m */; };
 		D64FCA8F22B93AFB00B6FFC2 /* VideoExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D64FCA8E22B93AFB00B6FFC2 /* VideoExampleTests.m */; };
 		D64FCA9A22B93AFB00B6FFC2 /* VideoExampleUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = D64FCA9922B93AFB00B6FFC2 /* VideoExampleUITests.m */; };
+		D64FCAAB22B93E2900B6FFC2 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D64FCAAA22B93E2900B6FFC2 /* AVKit.framework */; };
+		D64FCAB122BBE63800B6FFC2 /* PlayVideoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D64FCAB022BBE63800B6FFC2 /* PlayVideoViewController.m */; };
+		D64FCAB422BBF29E00B6FFC2 /* PlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = D64FCAB322BBF29E00B6FFC2 /* PlayerView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,12 @@
 		D64FCA9522B93AFB00B6FFC2 /* VideoExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VideoExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D64FCA9922B93AFB00B6FFC2 /* VideoExampleUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VideoExampleUITests.m; sourceTree = "<group>"; };
 		D64FCA9B22B93AFB00B6FFC2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D64FCAA822B93DE000B6FFC2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		D64FCAAA22B93E2900B6FFC2 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		D64FCAAF22BBE63800B6FFC2 /* PlayVideoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayVideoViewController.h; sourceTree = "<group>"; };
+		D64FCAB022BBE63800B6FFC2 /* PlayVideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayVideoViewController.m; sourceTree = "<group>"; };
+		D64FCAB222BBF29E00B6FFC2 /* PlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerView.h; sourceTree = "<group>"; };
+		D64FCAB322BBF29E00B6FFC2 /* PlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +65,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D64FCAAB22B93E2900B6FFC2 /* AVKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +93,7 @@
 				D64FCA8D22B93AFB00B6FFC2 /* VideoExampleTests */,
 				D64FCA9822B93AFB00B6FFC2 /* VideoExampleUITests */,
 				D64FCA7622B93AF800B6FFC2 /* Products */,
+				D64FCAA722B93DE000B6FFC2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,6 +118,10 @@
 				D64FCA8122B93AFB00B6FFC2 /* Assets.xcassets */,
 				D64FCA8322B93AFB00B6FFC2 /* Info.plist */,
 				D64FCA8422B93AFB00B6FFC2 /* main.m */,
+				D64FCAAF22BBE63800B6FFC2 /* PlayVideoViewController.h */,
+				D64FCAB022BBE63800B6FFC2 /* PlayVideoViewController.m */,
+				D64FCAB222BBF29E00B6FFC2 /* PlayerView.h */,
+				D64FCAB322BBF29E00B6FFC2 /* PlayerView.m */,
 			);
 			path = VideoExample;
 			sourceTree = "<group>";
@@ -127,6 +142,15 @@
 				D64FCA9B22B93AFB00B6FFC2 /* Info.plist */,
 			);
 			path = VideoExampleUITests;
+			sourceTree = "<group>";
+		};
+		D64FCAA722B93DE000B6FFC2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D64FCAAA22B93E2900B6FFC2 /* AVKit.framework */,
+				D64FCAA822B93DE000B6FFC2 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -191,6 +215,10 @@
 		D64FCA6D22B93AF800B6FFC2 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				KnownAssetTags = (
+					tivo_asset,
+					wowza_asset_no_frames,
+				);
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "C: Vyacheslav Klyovan";
 				TargetAttributes = {
@@ -258,9 +286,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D64FCAB122BBE63800B6FFC2 /* PlayVideoViewController.m in Sources */,
 				D64FCA7D22B93AF800B6FFC2 /* ViewController.m in Sources */,
 				D64FCA8522B93AFB00B6FFC2 /* main.m in Sources */,
 				D64FCA7A22B93AF800B6FFC2 /* AppDelegate.m in Sources */,
+				D64FCAB422BBF29E00B6FFC2 /* PlayerView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
