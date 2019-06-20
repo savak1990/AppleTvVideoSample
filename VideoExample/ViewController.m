@@ -21,10 +21,12 @@ typedef NS_ENUM(NSInteger, MyExampleButtonEnum) {
     ButtonPythonPlayer = 203
 };
 
+#define BASE_IP @"http://192.168.1.101"
+
 NSString *const UrlTivoAsset = @"https://s3.amazonaws.com/hls-demos/nokia/index.m3u8";
-NSString *const UrlWowzaNoFrames = @"http://192.168.211.157:1935/myapp/smil:test.smil/playlist.m3u8";
-NSString *const UrlWowzaIFrames = @"http://192.168.211.157:1935/myapp/smil:itest.smil/playlist.m3u8";
-NSString *const UrlPython = @"http://192.168.211.157:8000/index.m3u8";
+NSString *const UrlWowzaNoFrames = BASE_IP@":1935/myapp/smil:test.smil/playlist.m3u8";
+NSString *const UrlWowzaIFrames = BASE_IP@":1935/myapp/smil:itest.smil/playlist.m3u8";
+NSString *const UrlPython = BASE_IP@":8000/index.m3u8";
 
 NSString *const SegueIdTivoAsset = @"tivoAsset";
 NSString *const SegueIdWowzaNoFrames = @"wowzaNoFramesAsset";
