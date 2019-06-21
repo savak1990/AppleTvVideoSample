@@ -8,20 +8,10 @@
 
 #import "ViewController.h"
 #import "PlayVideoViewController.h"
+#import "ButtonTagEnum.h"
 #import <AVKit/AVKit.h>
 
-typedef NS_ENUM(NSInteger, MyExampleButtonEnum) {
-    ButtonTivoAssetController = 100,
-    ButtonWowzaNoFramesController = 101,
-    ButtonWowzaIFramesController = 102,
-    ButtonPythonController = 103,
-    ButtonTivoAssetPlayer = 200,
-    ButtonWowzaLocalNoFramesPlayer = 201,
-    ButtonWowzaLocalIFramesPlayer = 202,
-    ButtonPythonPlayer = 203
-};
-
-#define BASE_IP @"http://192.168.1.101"
+#define BASE_IP @"http://192.168.211.157"
 
 NSString *const UrlTivoAsset = @"https://s3.amazonaws.com/hls-demos/nokia/index.m3u8";
 NSString *const UrlWowzaNoFrames = BASE_IP@":1935/myapp/smil:test.smil/playlist.m3u8";

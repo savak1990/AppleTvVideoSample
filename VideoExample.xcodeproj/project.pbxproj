@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D60F37D822BCDCA500771BDA /* image.png in Resources */ = {isa = PBXBuildFile; fileRef = D60F37D722BCDCA500771BDA /* image.png */; };
 		D64FCA7A22B93AF800B6FFC2 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D64FCA7922B93AF800B6FFC2 /* AppDelegate.m */; };
 		D64FCA7D22B93AF800B6FFC2 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D64FCA7C22B93AF800B6FFC2 /* ViewController.m */; };
 		D64FCA8022B93AF800B6FFC2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D64FCA7E22B93AF800B6FFC2 /* Main.storyboard */; settings = {ASSET_TAGS = (wowza_asset_no_frames, ); }; };
@@ -37,6 +38,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D60F37D722BCDCA500771BDA /* image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image.png; sourceTree = "<group>"; };
 		D64FCA7522B93AF800B6FFC2 /* VideoExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VideoExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D64FCA7822B93AF800B6FFC2 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D64FCA7922B93AF800B6FFC2 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 		D64FCAB022BBE63800B6FFC2 /* PlayVideoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayVideoViewController.m; sourceTree = "<group>"; };
 		D64FCAB222BBF29E00B6FFC2 /* PlayerView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayerView.h; sourceTree = "<group>"; };
 		D64FCAB322BBF29E00B6FFC2 /* PlayerView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PlayerView.m; sourceTree = "<group>"; };
+		D64FCAB522BC35B000B6FFC2 /* ButtonTagEnum.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ButtonTagEnum.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +113,7 @@
 		D64FCA7722B93AF800B6FFC2 /* VideoExample */ = {
 			isa = PBXGroup;
 			children = (
+				D60F37D722BCDCA500771BDA /* image.png */,
 				D64FCA7822B93AF800B6FFC2 /* AppDelegate.h */,
 				D64FCA7922B93AF800B6FFC2 /* AppDelegate.m */,
 				D64FCA7B22B93AF800B6FFC2 /* ViewController.h */,
@@ -122,6 +126,7 @@
 				D64FCAB022BBE63800B6FFC2 /* PlayVideoViewController.m */,
 				D64FCAB222BBF29E00B6FFC2 /* PlayerView.h */,
 				D64FCAB322BBF29E00B6FFC2 /* PlayerView.m */,
+				D64FCAB522BC35B000B6FFC2 /* ButtonTagEnum.h */,
 			);
 			path = VideoExample;
 			sourceTree = "<group>";
@@ -262,6 +267,7 @@
 			files = (
 				D64FCA8222B93AFB00B6FFC2 /* Assets.xcassets in Resources */,
 				D64FCA8022B93AF800B6FFC2 /* Main.storyboard in Resources */,
+				D60F37D822BCDCA500771BDA /* image.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
