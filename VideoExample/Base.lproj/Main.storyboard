@@ -22,96 +22,64 @@
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="AVPlayerViewController streams" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="248-kg-rgC">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="AVPlayerViewController" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="248-kg-rgC">
                                 <rect key="frame" x="110" y="60" width="554" height="54"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="AVPlayer streams" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-sg-scr">
-                                <rect key="frame" x="1509" y="60" width="301" height="46"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="SbY-3k-ndt">
-                                <rect key="frame" x="110" y="168" width="507" height="464"/>
+                                <rect key="frame" x="110" y="168" width="364" height="212"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="act-fi-5ha" userLabel="tivo_controller" colorLabel="IBBuiltInLabel-Red">
-                                        <rect key="frame" x="0.0" y="0.0" width="507" height="86"/>
+                                    <button opaque="NO" tag="100" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="act-fi-5ha" userLabel="nokia_hls_sample_controller" colorLabel="IBBuiltInLabel-Red">
+                                        <rect key="frame" x="0.0" y="0.0" width="364" height="86"/>
                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                        <state key="normal" title="TiVo asset"/>
+                                        <state key="normal" title="nokia hls sample"/>
                                         <connections>
                                             <action selector="onPlayVideoWithController:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="diV-nw-XQw"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKB-TE-Hfb" userLabel="wowza_no_frame_controller" colorLabel="IBBuiltInLabel-Orange">
-                                        <rect key="frame" x="0.0" y="126" width="507" height="86"/>
+                                    <button opaque="NO" tag="101" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tKB-TE-Hfb" userLabel="local_asset_controller" colorLabel="IBBuiltInLabel-Orange">
+                                        <rect key="frame" x="0.0" y="126" width="364" height="86"/>
                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                        <state key="normal" title="Wowza local (no i-frame)"/>
+                                        <state key="normal" title="test local asset"/>
                                         <connections>
                                             <action selector="onPlayVideoWithController:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="niS-Qq-fAa"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="102" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cMq-oQ-zaI" userLabel="wowza_iframes_controller">
-                                        <rect key="frame" x="0.0" y="252" width="507" height="86"/>
-                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                        <state key="normal" title="Wowza local (i-frames)"/>
-                                        <connections>
-                                            <action selector="onPlayVideoWithController:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="3FP-kG-5oC"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="103" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yug-Ka-E9R" userLabel="python_controller">
-                                        <rect key="frame" x="0.0" y="378" width="507" height="86"/>
-                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                        <state key="normal" title="python server"/>
-                                        <connections>
-                                            <action selector="onPlayVideoWithController:" destination="BYZ-38-t0r" eventType="primaryActionTriggered" id="fSC-aE-dKR"/>
                                         </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="prN-fm-kIe">
-                                <rect key="frame" x="1303" y="168" width="507" height="464"/>
+                                <rect key="frame" x="1446" y="168" width="364" height="212"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ubw-dx-g3e" userLabel="tivo_player">
-                                        <rect key="frame" x="0.0" y="0.0" width="507" height="86"/>
+                                    <button opaque="NO" tag="200" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ubw-dx-g3e" userLabel="nokia_hls_sample_player">
+                                        <rect key="frame" x="0.0" y="0.0" width="364" height="86"/>
                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                        <state key="normal" title="TiVo asset"/>
+                                        <state key="normal" title="nokia hls sample"/>
                                         <connections>
-                                            <segue destination="tU3-hD-ZI4" kind="show" identifier="tivoAsset" id="RiQ-FL-G57"/>
+                                            <segue destination="tU3-hD-ZI4" kind="show" identifier="nokiaAssetTransition" id="RiQ-FL-G57"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" tag="201" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3rp-IN-Znw" userLabel="wowza_no_frame_player">
-                                        <rect key="frame" x="0.0" y="126" width="507" height="86"/>
+                                    <button opaque="NO" tag="201" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3rp-IN-Znw" userLabel="local_asset_player">
+                                        <rect key="frame" x="0.0" y="126" width="364" height="86"/>
                                         <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                        <state key="normal" title="Wowza local (no i-frame)"/>
+                                        <state key="normal" title="test local asset"/>
                                         <connections>
-                                            <segue destination="tU3-hD-ZI4" kind="show" identifier="wowzaNoFramesAsset" id="p05-xa-88G"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="202" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gf9-UT-EYj" userLabel="wowza_iframes_player">
-                                        <rect key="frame" x="0.0" y="252" width="507" height="86"/>
-                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                        <state key="normal" title="Wowza local (i-frames)"/>
-                                        <connections>
-                                            <segue destination="tU3-hD-ZI4" kind="show" identifier="wowzaIFramesAsset" id="iJ3-MZ-Ii4"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" tag="203" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W8N-F6-Lkb" userLabel="python_player">
-                                        <rect key="frame" x="0.0" y="378" width="507" height="86"/>
-                                        <inset key="contentEdgeInsets" minX="40" minY="20" maxX="40" maxY="20"/>
-                                        <state key="normal" title="python server"/>
-                                        <connections>
-                                            <segue destination="tU3-hD-ZI4" kind="show" identifier="pythonServerAsset" id="EfM-bW-EYA"/>
+                                            <segue destination="tU3-hD-ZI4" kind="show" identifier="localAssetTransition" id="p05-xa-88G"/>
                                         </connections>
                                     </button>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="AVPlayer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oNa-sg-scr">
+                                <rect key="frame" x="1656" y="60" width="154" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="wu6-TO-1qx"/>
@@ -218,6 +186,6 @@
         <image name="image" width="416" height="240"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="EfM-bW-EYA"/>
+        <segue reference="RiQ-FL-G57"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -19,6 +19,8 @@
 @property (nonatomic) AVAsset *playerAsset;
 @property (nonatomic) id periodicTimeObserver;
 @property (nonatomic) AVAssetImageGenerator *generator;
+@property (nonatomic) float playPosition;
+@property (nonatomic) BOOL thumbnailRequestInProgress;
 
 @end
 
@@ -41,17 +43,32 @@
     
     playerView.player = _player;
     
-    UISwipeGestureRecognizer *recognizer =
-        [[UISwipeGestureRecognizer alloc] initWithTarget:self
-                                                  action:@selector(swipeRight:)];
-    recognizer.direction = UISwipeGestureRecognizerDirectionRight;
-    [self.view addGestureRecognizer:recognizer];
+    UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
+    [self.view addGestureRecognizer:panRecognizer];
     
     [_player play];
 }
 
-- (void) swipeRight:(UISwipeGestureRecognizer *) sender {
-    NSLog(@"Swipe works");
+- (void) move:(UIPanGestureRecognizer*) sender {
+    CGPoint translation = [sender translationInView:[self view]];
+    CGPoint velocity = [sender velocityInView:[self view]];
+    float width = [self view].bounds.size.width;
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        //NSLog(@"GESTURE START: translationX=%.2f/%.2f velocityX=%.2f ",
+        //      translation.x, width, velocity.x);
+        [_player setRate:0.0];
+        _playPosition = CMTimeGetSeconds([_playerItem currentTime]);
+    }
+    else {
+        float current = CMTimeGetSeconds([_playerItem currentTime]);
+        float duration = CMTimeGetSeconds([_playerItem duration]);
+        _playPosition = current + duration * translation.x / width;
+        UIProgressView *trickplayProgressView = [[self view] viewWithTag: ProgressViewTrickplay];
+        if (duration > 0) {
+            [trickplayProgressView setProgress: _playPosition / duration animated: YES];
+        }
+        [self generateThumbnailForTime:CMTimeMake(_playPosition, 1)];
+    }
 }
 
 - (void) viewDidDisappear:(BOOL)animated {
@@ -92,52 +109,62 @@
                                  [weakSelf playbackPeriodicCallback];
                              }];
     
-    CMTime time = CMTimeMake(3, 2);
+    CMTime time = CMTimeMake(1, 2);
     [self generateThumbnailForTime:time];
 }
 
 - (void) generateThumbnailForTime:(CMTime) time {
-    NSArray *times = [NSArray arrayWithObject: [NSValue valueWithCMTime:time]];
     
-    AVAssetImageGeneratorCompletionHandler handler = ^(CMTime requestedTime, CGImageRef im, CMTime actualTime, AVAssetImageGeneratorResult result, NSError *error) {
-        if (result != AVAssetImageGeneratorSucceeded) {
-            NSLog(@"couldn't generate thumbnail, error:%@", error);
-        }else{
-            NSLog(@"img generated: time: %.2f actualTime: %.2f",
-                  CMTimeGetSeconds(requestedTime), CMTimeGetSeconds(actualTime));
-            NSLog(@"img generated: %@", im);
-            UIImage *image = [UIImage imageWithCGImage:im];
+    if (!_thumbnailRequestInProgress) {
+        NSLog(@"PlayVideoViewController.generateThumbnailForTime: %.2f", CMTimeGetSeconds(time));
+        _thumbnailRequestInProgress = YES;
+        NSArray *times = [NSArray arrayWithObject: [NSValue valueWithCMTime:time]];
+        
+        AVAssetImageGeneratorCompletionHandler handler =
+            ^(CMTime requestedTime,
+              CGImageRef im,
+              CMTime actualTime,
+              AVAssetImageGeneratorResult result,
+              NSError *error) {
+            
+            UIImage *image = nil;
+            if (result == AVAssetImageGeneratorSucceeded) {
+                image = [UIImage imageWithCGImage:im];
+            }
+            NSLog(@"PlayVideoViewController.generateThumbnailForTime: %.2f generated: %.2f succeded: %d",
+                  CMTimeGetSeconds(requestedTime), CMTimeGetSeconds(actualTime), (int) (im != nil));
             [self performSelectorOnMainThread:@selector(setVideoImage:)
                                    withObject:image
                                 waitUntilDone:NO];
-        }
-    };
+        };
     
-    [_generator generateCGImagesAsynchronouslyForTimes:times completionHandler:handler];
+        [_generator generateCGImagesAsynchronouslyForTimes:times completionHandler:handler];
+    }
 }
 
 - (void) setVideoImage:(UIImage *) image {
-    UIImageView *thumbnailView = [[self view] viewWithTag: ImageThumbnail];
-    [thumbnailView setImage: image];
+    if (image != nil) {
+        UIImageView *thumbnailView = [[self view] viewWithTag: ImageThumbnail];
+        [thumbnailView setImage: image];
+    }
+    _thumbnailRequestInProgress = NO;
 }
 
 - (void) playbackPeriodicCallback {
-    NSLog(@"PlayVideoViewController.playbackPeriodicCallback");
-    
     float duration = CMTimeGetSeconds([_playerItem duration]);
-    float current = CMTimeGetSeconds([_playerItem currentTime]);
+    _playPosition = CMTimeGetSeconds([_playerItem currentTime]);
     
     NSString *durationStr = [NSString stringWithFormat:@"%.2f", duration];
     UILabel *durationLabel = [[self view] viewWithTag:LabelDuration];
     durationLabel.text = durationStr;
     
-    NSString *currentStr = [NSString stringWithFormat:@"%.2f", current];
+    NSString *currentStr = [NSString stringWithFormat:@"%.2f", _playPosition];
     UILabel *currentLabel = [[self view] viewWithTag:LabelCurrent];
     [currentLabel setText: currentStr];
     
     UIProgressView *trickplayProgressView = [[self view] viewWithTag: ProgressViewTrickplay];
     if (duration > 0) {
-        [trickplayProgressView setProgress: current / duration animated: YES];
+        [trickplayProgressView setProgress: _playPosition / duration animated: YES];
     }
     
     NSString *seekableTimeRangesStr = [self getReadableTimeRanges:[_playerItem seekableTimeRanges]];
@@ -151,9 +178,10 @@
 
 - (IBAction)onPlayPausePressed:(UIButton *)sender {
     NSLog(@"PlayVideoViewController.onPlayPausePressed");
-    [self generateThumbnailForTime:[_playerItem currentTime]];
     if ([_player rate] == 0.0) {
-        _player.rate = 1.0;
+        __weak __typeof(_player) weakPlayer = _player;
+        [_player seekToTime : CMTimeMake(_playPosition, 1)
+          completionHandler : ^(BOOL isFinished) { weakPlayer.rate = 1.0; }];
     }
     else {
         _player.rate = 0.0;

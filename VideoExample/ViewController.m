@@ -13,15 +13,11 @@
 
 #define BASE_IP @"http://192.168.211.157"
 
-NSString *const UrlTivoAsset = @"https://s3.amazonaws.com/hls-demos/nokia/index.m3u8";
-NSString *const UrlWowzaNoFrames = BASE_IP@":1935/myapp/smil:test.smil/playlist.m3u8";
-NSString *const UrlWowzaIFrames = BASE_IP@":1935/myapp/smil:itest.smil/playlist.m3u8";
-NSString *const UrlPython = BASE_IP@":8000/index.m3u8";
+NSString *const UrlNokiaSampleAsset = @"https://s3.amazonaws.com/hls-demos/nokia/index.m3u8";
+NSString *const UrlLocalTestAsset = BASE_IP@":8000/index.m3u8";
 
-NSString *const SegueIdTivoAsset = @"tivoAsset";
-NSString *const SegueIdWowzaNoFrames = @"wowzaNoFramesAsset";
-NSString *const SegueIdWowzaIFrames = @"wowzaIFramesAsset";
-NSString *const SegueIdPython = @"pythonServerAsset";
+NSString *const SegueNokiaSampleAsset = @"nokiaAssetTransition";
+NSString *const SegueLocalTestAsset = @"localAssetTransition";
 
 @interface ViewController ()
 
@@ -32,19 +28,13 @@ NSString *const SegueIdPython = @"pythonServerAsset";
 - (IBAction)onPlayVideoWithController:(UIButton *) sender {
     NSLog(@"onPlayVideoWithController: %lu", [ sender tag ]);
     
-    NSString *videoUrlStr = UrlTivoAsset;
+    NSString *videoUrlStr = UrlNokiaSampleAsset;
     switch ([sender tag]) {
-        case ButtonTivoAssetController:
-            videoUrlStr = UrlTivoAsset;
+        case ButtonNokiaAssetController:
+            videoUrlStr = UrlNokiaSampleAsset;
             break;
-        case ButtonWowzaNoFramesController:
-            videoUrlStr = UrlWowzaNoFrames;
-            break;
-        case ButtonWowzaIFramesController:
-            videoUrlStr = UrlWowzaIFrames;
-            break;
-        case ButtonPythonController:
-            videoUrlStr = UrlPython;
+        case ButtonLocalAssetController:
+            videoUrlStr = UrlLocalTestAsset;
             break;
     }
     NSLog(@"Playing %@", videoUrlStr);
@@ -60,18 +50,12 @@ NSString *const SegueIdPython = @"pythonServerAsset";
 - (IBAction)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSLog(@"prepareForSegue %@", [segue identifier]);
     NSString *segueId = [segue identifier];
-    NSString *videoUrlStr = UrlTivoAsset;
-    if ([segueId isEqualToString:SegueIdTivoAsset]) {
-        videoUrlStr = UrlTivoAsset;
+    NSString *videoUrlStr = UrlNokiaSampleAsset;
+    if ([segueId isEqualToString:SegueNokiaSampleAsset]) {
+        videoUrlStr = UrlNokiaSampleAsset;
     }
-    else if ([segueId isEqualToString:SegueIdWowzaNoFrames]) {
-        videoUrlStr = UrlWowzaNoFrames;
-    }
-    else if ([segueId isEqualToString:SegueIdWowzaIFrames]) {
-        videoUrlStr = UrlWowzaIFrames;
-    }
-    else if ([segueId isEqualToString:SegueIdPython]) {
-        videoUrlStr = UrlPython;
+    else if ([segueId isEqualToString:SegueLocalTestAsset]) {
+        videoUrlStr = UrlLocalTestAsset;
     }
     NSLog(@"url is %@", videoUrlStr);
     

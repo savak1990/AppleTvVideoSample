@@ -10,14 +10,10 @@
 #define ButtonTagEnum_h
 
 typedef NS_ENUM(NSInteger, ViewTagEnum) {
-    ButtonTivoAssetController = 100,
-    ButtonWowzaNoFramesController = 101,
-    ButtonWowzaIFramesController = 102,
-    ButtonPythonController = 103,
-    ButtonTivoAssetPlayer = 200,
-    ButtonWowzaLocalNoFramesPlayer = 201,
-    ButtonWowzaLocalIFramesPlayer = 202,
-    ButtonPythonPlayer = 203,
+    ButtonNokiaAssetController = 100,
+    ButtonLocalAssetController = 101,
+    ButtonNokiaAssetPlayer = 200,
+    ButtonLocalAssetPlayer = 201,
     ButtonPlayPause = 300,
     ProgressViewTrickplay = 301,
     LabelDuration = 302,
