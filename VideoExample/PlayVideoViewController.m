@@ -14,13 +14,13 @@
 
 @interface PlayVideoViewController ()
 
-@property (nonatomic) AVPlayer *player;
-@property (nonatomic) AVPlayerItem *playerItem;
-@property (nonatomic) AVAsset *playerAsset;
-@property (nonatomic) id periodicTimeObserver;
-@property (nonatomic) AVAssetImageGenerator *generator;
-@property (nonatomic) float playPosition;
-@property (nonatomic) BOOL thumbnailRequestInProgress;
+@property (nonatomic, readonly) AVPlayer *player;
+@property (nonatomic, readonly) AVPlayerItem *playerItem;
+@property (nonatomic, readonly) AVAsset *playerAsset;
+@property (nonatomic, readonly) id periodicTimeObserver;
+@property (nonatomic, readonly) AVAssetImageGenerator *generator;
+@property (nonatomic, readonly) float playPosition;
+@property (nonatomic, readonly) BOOL thumbnailRequestInProgress;
 
 @end
 
@@ -51,7 +51,6 @@
 
 - (void) move:(UIPanGestureRecognizer*) sender {
     CGPoint translation = [sender translationInView:[self view]];
-    CGPoint velocity = [sender velocityInView:[self view]];
     float width = [self view].bounds.size.width;
     if (sender.state == UIGestureRecognizerStateBegan) {
         //NSLog(@"GESTURE START: translationX=%.2f/%.2f velocityX=%.2f ",
