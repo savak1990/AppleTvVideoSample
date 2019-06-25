@@ -21,6 +21,7 @@
 @property (nonatomic, readonly) AVAssetImageGenerator *generator;
 @property (nonatomic, readonly) float playPosition;
 @property (nonatomic, readonly) BOOL thumbnailRequestInProgress;
+@property (nonatomic, readonly) NSDate *measureStart;
 
 @end
 
@@ -115,10 +116,12 @@
 - (void) generateThumbnailForTime:(CMTime) time {
     
     if (!_thumbnailRequestInProgress) {
+        _measureStart = [NSDate date];
         NSLog(@"PlayVideoViewController.generateThumbnailForTime: %.2f", CMTimeGetSeconds(time));
         _thumbnailRequestInProgress = YES;
         NSArray *times = [NSArray arrayWithObject: [NSValue valueWithCMTime:time]];
         
+        __weak typeof(self) weakSelf = self;
         AVAssetImageGeneratorCompletionHandler handler =
             ^(CMTime requestedTime,
               CGImageRef im,
@@ -126,12 +129,18 @@
               AVAssetImageGeneratorResult result,
               NSError *error) {
             
+            NSDate *measureEnd = [NSDate date];
+            NSTimeInterval generateThumbnailsTime = [measureEnd timeIntervalSinceDate: [weakSelf measureStart]];
+
             UIImage *image = nil;
             if (result == AVAssetImageGeneratorSucceeded) {
                 image = [UIImage imageWithCGImage:im];
             }
-            NSLog(@"PlayVideoViewController.generateThumbnailForTime: %.2f generated: %.2f succeded: %d",
-                  CMTimeGetSeconds(requestedTime), CMTimeGetSeconds(actualTime), (int) (im != nil));
+            NSLog(@"PlayVideoViewController.generateThumbnailForTime: %.2f generated: %.2f succeded: %d took %.2f",
+                  CMTimeGetSeconds(requestedTime),
+                  CMTimeGetSeconds(actualTime),
+                  (int) (im != nil),
+                  generateThumbnailsTime);
             [self performSelectorOnMainThread:@selector(setVideoImage:)
                                    withObject:image
                                 waitUntilDone:NO];
