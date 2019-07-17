@@ -11,36 +11,60 @@
 #import "ButtonTagEnum.h"
 #import <AVKit/AVKit.h>
 
-#define BASE_IP @"http://192.168.211.157"
+NSString *const SeguePlayWithAVPlayer = @"seguePlayWithAVPlayer";
 
-NSString *const UrlNokiaSampleAsset = @"https://s3.amazonaws.com/hls-demos/nokia/index.m3u8";
-NSString *const UrlLocalTestAsset = BASE_IP@":8000/index.m3u8";
+@interface ViewController () <UITableViewDataSource, UITableViewDelegate>
+@property (nonatomic, strong) NSArray *streams;
+@property (nonatomic, strong) NSDictionary *stream;
 
-NSString *const SegueNokiaSampleAsset = @"nokiaAssetTransition";
-NSString *const SegueLocalTestAsset = @"localAssetTransition";
-
-@interface ViewController ()
-
+@property (weak, nonatomic) IBOutlet UITableView *tableAVPlayerViewController;
+@property (weak, nonatomic) IBOutlet UITableView *tableAVPlayer;
 @end
 
 @implementation ViewController
 
-- (IBAction)onPlayVideoWithController:(UIButton *) sender {
-    NSLog(@"onPlayVideoWithController: %lu", [ sender tag ]);
-    
-    NSString *videoUrlStr = UrlNokiaSampleAsset;
-    switch ([sender tag]) {
-        case ButtonNokiaAssetController:
-            videoUrlStr = UrlNokiaSampleAsset;
-            break;
-        case ButtonLocalAssetController:
-            videoUrlStr = UrlLocalTestAsset;
-            break;
+@synthesize streams, stream;
+
+- (void) viewDidLoad {
+    [super viewDidLoad];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"streams" ofType:@"plist"];
+    streams = [NSArray arrayWithContentsOfFile:path];
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    NSLog(@"%s: %@", __func__, tableView);
+    if (tableView == _tableAVPlayer) {
+        NSLog(@"tableView is tableAVPlayer");
     }
-    NSLog(@"Playing %@", videoUrlStr);
-    
-    NSURL *videoUrl = [NSURL URLWithString:videoUrlStr];
-    AVPlayer *player = [AVPlayer playerWithURL:videoUrl];
+    else if (tableView == _tableAVPlayerViewController) {
+        NSLog(@"tableView is tableAVPlayerViewController");
+    }
+    return [streams count];
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *cellId = @"cell1"; // for _tableAVPlayerViewController
+    if (tableView == _tableAVPlayer) {
+        cellId = @"cell2";
+    }
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
+    NSDictionary *stream = streams[indexPath.row];
+    cell.textLabel.text = [stream valueForKey:@"name"];
+    cell.detailTextLabel.text = [stream valueForKey:@"url"];
+    cell.tag = indexPath.row;
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSDictionary *stream = streams[indexPath.row];
+    NSString *urlStr = [stream valueForKey:@"url"];
+    NSLog(@"%s: select %u -> %@", __func__, (unsigned) indexPath.row, urlStr);
+    [self startPlayViewController: urlStr];
+}
+
+- (void) startPlayViewController:(NSString *) urlStr {
+    NSURL *url = [NSURL URLWithString:urlStr];
+    AVPlayer *player = [AVPlayer playerWithURL:url];
     AVPlayerViewController *controller = [[AVPlayerViewController alloc] init];
     [self presentViewController:controller animated:YES completion:nil];
     controller.player = player;
@@ -50,17 +74,11 @@ NSString *const SegueLocalTestAsset = @"localAssetTransition";
 - (IBAction)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     NSLog(@"prepareForSegue %@", [segue identifier]);
     NSString *segueId = [segue identifier];
-    NSString *videoUrlStr = UrlNokiaSampleAsset;
-    if ([segueId isEqualToString:SegueNokiaSampleAsset]) {
-        videoUrlStr = UrlNokiaSampleAsset;
+    if ([segueId isEqualToString:SeguePlayWithAVPlayer]) {
+        NSLog(@"%s: seguePlayWithAvPlayer", __func__);
+        PlayVideoViewController *playVideoVC = [segue destinationViewController];
+        playVideoVC.videoUrlStr = [streams[[sender tag]] valueForKey:@"url"];
     }
-    else if ([segueId isEqualToString:SegueLocalTestAsset]) {
-        videoUrlStr = UrlLocalTestAsset;
-    }
-    NSLog(@"url is %@", videoUrlStr);
-    
-    PlayVideoViewController *playVideoVC = [segue destinationViewController];
-    playVideoVC.videoUrlStr = videoUrlStr;
 }
 
 @end
