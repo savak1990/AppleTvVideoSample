@@ -14,7 +14,6 @@
 
 @interface PlayVideoViewController ()
 
-@property (nonatomic, readonly) AVPlayer *player;
 @property (nonatomic, readonly) AVPlayerItem *playerItem;
 @property (nonatomic, readonly) AVAsset *playerAsset;
 @property (nonatomic, readonly) id periodicTimeObserver;
@@ -29,12 +28,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSLog(@"PlayVideoViewController.viewDidLoad: videoUrl=%@", _videoUrlStr);
     
     PlayerView *playerView = (PlayerView *)[self view];
     
-    NSURL *nsVideoUrl = [NSURL URLWithString:_videoUrlStr];
-    _player = [AVPlayer playerWithURL: nsVideoUrl];
     _playerItem = [_player currentItem];
     _playerAsset = [_playerItem asset];
     

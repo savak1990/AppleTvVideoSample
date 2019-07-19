@@ -138,18 +138,23 @@ NSString *const PlayOptionAVPlayerVCAS = @"AVPlayerVCAS";
     NSLog(@"%s url=%@", __func__, urlStr);
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     PlayVideoViewController *controller = [storyboard instantiateViewControllerWithIdentifier: @"playVideoView"];
-    controller.videoUrlStr = urlStr;
+    AVPlayer *player = [self createPlayer:urlStr];
+    controller.player = player;
     [self presentViewController: controller animated: YES completion: nil];
 }
 
 - (void) startAVPlayerViewController:(NSString *) urlStr {
     NSLog(@"%s url=%@", __func__, urlStr);
-    NSURL *url = [NSURL URLWithString:urlStr];
-    AVPlayer *player = [AVPlayer playerWithURL:url];
     AVPlayerViewController *controller = [[AVPlayerViewController alloc] init];
     [self presentViewController:controller animated: YES completion: nil];
+    AVPlayer *player = [self createPlayer:urlStr];
     controller.player = player;
     [player play];
+}
+
+- (AVPlayer *) createPlayer:(NSString *) urlStr {
+    NSURL *url = [NSURL URLWithString:urlStr];
+    return [AVPlayer playerWithURL:url];
 }
 
 @end
