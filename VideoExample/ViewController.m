@@ -11,74 +11,145 @@
 #import "ButtonTagEnum.h"
 #import <AVKit/AVKit.h>
 
-NSString *const SeguePlayWithAVPlayer = @"seguePlayWithAVPlayer";
+NSString *const PlayOptionAVPlayerViewController = @"AVPlayerViewController";
+NSString *const PlayOptionAVPlayer = @"AVPlayer";
+NSString *const PlayOptionAVPlayerViewControllerVCAS = @"AVPlayerViewControllerVCAS";
+NSString *const PlayOptionAVPlayerVCAS = @"AVPlayerVCAS";
 
 @interface ViewController () <UITableViewDataSource, UITableViewDelegate>
 @property (nonatomic, strong) NSArray *streams;
-@property (nonatomic, strong) NSDictionary *stream;
+@property (nonatomic, strong) NSArray *playOptions;
 
-@property (weak, nonatomic) IBOutlet UITableView *tableAVPlayerViewController;
-@property (weak, nonatomic) IBOutlet UITableView *tableAVPlayer;
+@property (weak, nonatomic) IBOutlet UIButton *btnStreamChooser;
+@property (weak, nonatomic) IBOutlet UITableView *tableViewStreams;
+@property (weak, nonatomic) IBOutlet UIButton *btnPlayOptionsChooser;
+@property (weak, nonatomic) IBOutlet UITableView *tableViewPlayOptions;
+@property (weak, nonatomic) IBOutlet UIButton *btnPlay;
+
+@property (nonatomic, strong) NSDictionary *choosenStream;
+@property (nonatomic, strong) NSString *choosenPlayOption;
+
 @end
 
 @implementation ViewController
 
-@synthesize streams, stream;
+@synthesize streams;
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"streams" ofType:@"plist"];
-    streams = [NSArray arrayWithContentsOfFile:path];
+    
+    NSString *streamsPath = [[NSBundle mainBundle] pathForResource:@"streams" ofType:@"plist"];
+    streams = [NSArray arrayWithContentsOfFile:streamsPath];
+    _choosenStream = [streams objectAtIndex:0];
+    [_btnStreamChooser setTitle:[_choosenStream valueForKey:@"name"] forState:UIControlStateNormal];
+    
+    _playOptions = [NSArray arrayWithObjects:
+                    PlayOptionAVPlayerViewController,
+                    PlayOptionAVPlayer,
+                    PlayOptionAVPlayerViewControllerVCAS,
+                    PlayOptionAVPlayerVCAS, nil];
+    _choosenPlayOption = [_playOptions objectAtIndex:0];
+    [_btnPlayOptionsChooser setTitle:_choosenPlayOption forState:UIControlStateNormal];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     NSLog(@"%s: %@", __func__, tableView);
-    if (tableView == _tableAVPlayer) {
-        NSLog(@"tableView is tableAVPlayer");
+    if (tableView == _tableViewStreams) {
+        return [streams count];
     }
-    else if (tableView == _tableAVPlayerViewController) {
-        NSLog(@"tableView is tableAVPlayerViewController");
+    else if (tableView == _tableViewPlayOptions) {
+        return [_playOptions count];
     }
-    return [streams count];
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *cellId = @"cell1"; // for _tableAVPlayerViewController
-    if (tableView == _tableAVPlayer) {
-        cellId = @"cell2";
+    NSString *cellId;
+    NSString *titleStr;
+    if (tableView == _tableViewStreams) {
+        NSDictionary *stream = [streams objectAtIndex:indexPath.row];
+        cellId = @"tagStreamItem";
+        titleStr = [stream valueForKey:@"name"];
+    } else if (tableView == _tableViewPlayOptions) {
+        cellId = @"tagPlayOptionItem";
+        titleStr = [_playOptions objectAtIndex:indexPath.row];
     }
+    
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellId];
-    NSDictionary *stream = streams[indexPath.row];
-    cell.textLabel.text = [stream valueForKey:@"name"];
-    cell.detailTextLabel.text = [stream valueForKey:@"url"];
+    cell.textLabel.text = titleStr;
     cell.tag = indexPath.row;
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSDictionary *stream = streams[indexPath.row];
-    NSString *urlStr = [stream valueForKey:@"url"];
-    NSLog(@"%s: select %u -> %@", __func__, (unsigned) indexPath.row, urlStr);
-    [self startPlayViewController: urlStr];
+    
+    NSLog(@"%s index: %u", __func__, (unsigned) indexPath.row);
+    
+    if (tableView == _tableViewStreams) {
+        _choosenStream = [streams objectAtIndex: indexPath.row];
+        [_btnStreamChooser setTitle:[_choosenStream valueForKey:@"name"] forState:UIControlStateNormal];
+        [_tableViewStreams resignFirstResponder];
+        [_btnPlayOptionsChooser becomeFirstResponder];
+        _tableViewStreams.hidden = YES;
+    } else if (tableView == _tableViewPlayOptions) {
+        _choosenPlayOption = [_playOptions objectAtIndex: indexPath.row];
+        [_btnPlayOptionsChooser setTitle:_choosenPlayOption forState:UIControlStateNormal];
+        [_tableViewPlayOptions resignFirstResponder];
+        [_btnPlay becomeFirstResponder];
+        _tableViewPlayOptions.hidden = YES;
+    }
+    
+    [self setNeedsFocusUpdate];
+    
+//    [self startPlayViewController: urlStr];
 }
 
-- (void) startPlayViewController:(NSString *) urlStr {
+- (IBAction)onStreamChooserSelect:(id)sender {
+    NSLog(@"%s", __func__);
+    _tableViewStreams.hidden = !_tableViewStreams.hidden;
+    _tableViewPlayOptions.hidden = YES;
+}
+
+- (IBAction)onPlayOptionSelect:(id)sender {
+    NSLog(@"%s", __func__);
+    _tableViewPlayOptions.hidden = !_tableViewPlayOptions.hidden;
+    _tableViewStreams.hidden = YES;
+}
+
+- (IBAction)onPlaySelect:(id)sender {
+    NSLog(@"%s", __func__);
+    
+    _tableViewStreams.hidden = YES;
+    _tableViewPlayOptions.hidden = YES;
+    
+    NSString *videoUrl = [_choosenStream valueForKey:@"url"];
+    if ([_choosenPlayOption isEqualToString: PlayOptionAVPlayerViewController]) {
+        [self startAVPlayerViewController: videoUrl];
+    } else if ([_choosenPlayOption isEqualToString: PlayOptionAVPlayer]) {
+        [self startPlayVideoViewController: videoUrl];
+    } else if ([_choosenPlayOption isEqualToString: PlayOptionAVPlayerViewControllerVCAS]) {
+        [self startAVPlayerViewController: videoUrl]; // TODO VCAS
+    } else if ([_choosenPlayOption isEqualToString: PlayOptionAVPlayerVCAS]) {
+        [self startAVPlayerViewController: videoUrl]; // TODO VCAS
+    }
+}
+
+- (void) startPlayVideoViewController:(NSString *) urlStr {
+    NSLog(@"%s url=%@", __func__, urlStr);
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    PlayVideoViewController *controller = [storyboard instantiateViewControllerWithIdentifier: @"playVideoView"];
+    controller.videoUrlStr = urlStr;
+    [self presentViewController: controller animated: YES completion: nil];
+}
+
+- (void) startAVPlayerViewController:(NSString *) urlStr {
+    NSLog(@"%s url=%@", __func__, urlStr);
     NSURL *url = [NSURL URLWithString:urlStr];
     AVPlayer *player = [AVPlayer playerWithURL:url];
     AVPlayerViewController *controller = [[AVPlayerViewController alloc] init];
-    [self presentViewController:controller animated:YES completion:nil];
+    [self presentViewController:controller animated: YES completion: nil];
     controller.player = player;
     [player play];
-}
-
-- (IBAction)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    NSLog(@"prepareForSegue %@", [segue identifier]);
-    NSString *segueId = [segue identifier];
-    if ([segueId isEqualToString:SeguePlayWithAVPlayer]) {
-        NSLog(@"%s: seguePlayWithAvPlayer", __func__);
-        PlayVideoViewController *playVideoVC = [segue destinationViewController];
-        playVideoVC.videoUrlStr = [streams[[sender tag]] valueForKey:@"url"];
-    }
 }
 
 @end
