@@ -1,2 +1,15 @@
 **/xcdebugger
+
+build/
+
+xcuserdata
+
+!xcshareddata
+*xcodeproj/project.xcworkspace/builds/
+*xcodeproj/project.xcworkspace
+project.xcworkspace
+
 .DS_Store
+*.swp
+*.lock
+profile
