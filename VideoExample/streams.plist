@@ -4,33 +4,9 @@
 <array>
 	<dict>
 		<key>name</key>
-		<string>HLS Nokia Demo</string>
-		<key>url</key>
-		<string>https://s3.amazonaws.com/hls-demos/nokia/index.m3u8</string>
-	</dict>
-	<dict>
-		<key>name</key>
 		<string>Local</string>
 		<key>url</key>
 		<string>http://192.168.200.33:8000/index.m3u8</string>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>HLS Nokia Demo Live</string>
-		<key>url</key>
-		<string>https://s3.amazonaws.com/hls-demos/nokia/index-live.m3u8</string>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>HLS Demo KQED</string>
-		<key>url</key>
-		<string>https://s3.amazonaws.com/hls-demos/kqed-latest/index.m3u8</string>
-	</dict>
-	<dict>
-		<key>name</key>
-		<string>HLS Demo KQED index-validated</string>
-		<key>url</key>
-		<string>https://s3.amazonaws.com/hls-demos/kqed-may17/index-validated.m3u8</string>
 	</dict>
 </array>
 </plist>
